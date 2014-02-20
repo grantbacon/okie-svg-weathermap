@@ -8,6 +8,12 @@ ADDR='localhost'
 PORT='8085'
 STATIC_DIR='static'
 
+def run_crisper():
+	#test a subprocess call to the crisper
+	test = subprocess.call(['python' , 'crisper.py'])
+	
+	print "success"
+  
 def relative_path(suffix):
     return os.path.join(os.path.dirname(os.path.abspath(__file__)), suffix)
 
@@ -17,10 +23,11 @@ def static(filepath):
 
 @route('/about')
 def about():
-    return template('about')
+  return template('about')
 
 @route('/')
 def index():
-    return template('index')
+	run_crisper()
+	return template('index')
 
 run(host=ADDR, port=PORT)
