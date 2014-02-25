@@ -13,9 +13,14 @@ lines = body.split("\n")
 formatedLines = ""
 for line in lines:
 	data = line.split(",")
-	#get data out of the Lat Long and Temp locations
-	lat = data[3]
-	lon = data[4]
+	if len(data) > 1:
+		#get data out of the Lat Long and Temp locations
+		lat = data[3]
+		lon = data[4]
+		print "The latitude is: " + lat
+		print "The longitude is: " + lon
+		temp = data[10]
+		print "the temperature is: " + temp
 
 print "done printing"
 
