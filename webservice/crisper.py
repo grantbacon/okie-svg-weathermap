@@ -1,5 +1,36 @@
-#!/usr/bin/python
-import urllib2
+# -*- coding: utf8 -*-
+from urllib2 import urlopen
+from time import time, sleep
+import threading
+import os
+
+class CrisperTimer(threading.Thread):
+    def run(self):
+        return
+
+class Crisper(threading.Thread):
+    """
+    Crisper - "Keeps Data Fresh"™
+
+    Public State(s):
+        latest_file_time int Unix timestamp representing the last time a file was stored
+
+    Variables:
+        stor_dir string Location to store saved SVG files
+    """
+
+    def __init__(self, stor_dir = ".", latest_file_time = 0):
+        self.latest_file_time = latest_file_time
+        self.stor_dir = stor_dir
+        # TODO: call timer to repeatedly run function
+#        self.test_time()
+
+    def test_time(self):
+
+
+    def store_data(self, svg):
+        return
+"""
 
 #Awesome crisper made by Joel the badass
 print "about to call url"
@@ -19,3 +50,4 @@ for line in lines:
 
 print "done printing"
 
+"""
