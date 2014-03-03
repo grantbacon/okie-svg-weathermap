@@ -12,15 +12,21 @@ print "Print out each line of the file"
 lines = body.split("\n")
 formatedLines = ""
 for line in lines:
+	if line[0] == "STID":
+		continue
 	data = line.split(",")
 	if len(data) > 1:
 		#get data out of the Lat Long and Temp locations
 		lat = data[3]
 		lon = data[4]
-		print "The latitude is: " + lat
-		print "The longitude is: " + lon
+		#print "The latitude is: " + lat
+		#print "The longitude is: " + lon
 		temp = data[10]
-		print "the temperature is: " + temp
+		if temp == " ":
+			temp = "-1"
+		#print "the temperature is: " + temp
+		formatedLines += lat + "," + lon + "," + temp + "\n"
 
+print formatedLines
 print "done printing"
 

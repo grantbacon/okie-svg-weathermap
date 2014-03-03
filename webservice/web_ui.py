@@ -10,7 +10,7 @@ STATIC_DIR='static'
 
 def run_crisper():
 	#test a subprocess call to the crisper
-	test = subprocess.call(['python' , 'crisper.py'])
+	test = subprocess.Popen(["python", "crisper.py"])
 	
 	print "success"
   
@@ -27,7 +27,7 @@ def about():
 
 @route('/')
 def index():
-	run_crisper()
+	#run_crisper()
 	return template('index')
 
 run(host=ADDR, port=PORT)
