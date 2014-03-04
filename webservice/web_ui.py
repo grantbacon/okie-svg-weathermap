@@ -2,6 +2,8 @@ from bottle import run, route, request, template, static_file
 import subprocess
 import json
 import os
+import threading
+import time
 
 
 ADDR='localhost'
@@ -27,7 +29,9 @@ def about():
 
 @route('/')
 def index():
-	#run_crisper()
+	t = threading.Thread(target=run_crisper, args=())
+        t.start()
+        t.join()
 	return template('index')
 
 run(host=ADDR, port=PORT)
