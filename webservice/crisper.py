@@ -23,7 +23,7 @@ for line in lines:
 		#print "The longitude is: " + lon
 		temp = data[10]
 		if temp == " ":
-			temp = "-1"
+			continue
 		#print "the temperature is: " + temp
 		formattedLines += lat + "," + lon + "," + temp + "\n"
 
