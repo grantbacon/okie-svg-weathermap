@@ -12,10 +12,10 @@ print "Print out each line of the file"
 lines = body.split("\n")
 formattedLines = ""
 for line in lines:
-	if line[0] == "STID":
-		continue
 	data = line.split(",")
 	if len(data) >= 9:
+		if data[0] == "STID":
+			continue
 		#get data out of the Lat Long and Temp locations
 		lat = data[3]
 		lon = data[4]
