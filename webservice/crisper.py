@@ -1,34 +1,29 @@
-#!/usr/bin/python
-import urllib2
-import string
+# -*- coding: utf8 -*-
+from urllib2 import urlopen
+from time import time, sleep
+import threading
+import os
+import mez
 
-#Awesome crisper made by Joel the badass
-print "about to call url"
-response = urllib2.urlopen('http://www.mesonet.org/data/public/mesonet/current/current.csv.txt')
-print "waiting for response"
-body = response.read()
-print "Print out each line of the file"
-#break the data into lines
+class CrisperTimer(threading.Thread):
+    def run(self):
 
-lines = body.split("\n")
-formatedLines = ""
-print lines
-for line in lines:
-	if line[0] == "STID":
-		continue
-	data = line.split(",")
-	if len(data) > 1:
-		#get data out of the Lat Long and Temp locations
-		lat = data[3]
-		lon = data[4]
-		#print "The latitude is: " + lat
-		#print "The longitude is: " + lon
-		temp = data[10]
-		if temp == " ":
-			temp = "-1"
-		#print "the temperature is: " + temp
-		formatedLines += lat + "," + lon + "," + temp + "\n"
+class Crisper:
+    """
+    Crisper - "Keeps Data Fresh"™
 
-print formatedLines
-print "done printing"
+    Public State(s):
+        latest_file_time int Unix timestamp representing the last time a file was stored
 
+    Variables:
+        stor_dir string Location to store saved SVG files
+    """
+
+    def __init__(self, stor_dir = ".", latest_file_time = 0):
+        self.latest_file_time = latest_file_time
+        self.stor_dir = stor_dir
+        self.meso = mez.Mez()
+        return
+
+    def store_data(self, svg):
+        return
