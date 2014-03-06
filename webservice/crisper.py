@@ -41,13 +41,24 @@ print "Print out each line of the file"
 #break the data into lines
 
 lines = body.split("\n")
-formatedLines = ""
+formattedLines = ""
 for line in lines:
 	data = line.split(",")
-	#get data out of the Lat Long and Temp locations
-	lat = data[3]
-	lon = data[4]
+	if len(data) >= 9:
+		if data[0] == "STID":
+			continue
+		#get data out of the Lat Long and Temp locations
+		lat = data[3]
+		lon = data[4]
+		#print "The latitude is: " + lat
+		#print "The longitude is: " + lon
+		temp = data[10]
+		if temp == " ":
+			continue
+		#print "the temperature is: " + temp
+		formattedLines += lat + "," + lon + "," + temp + "\n"
 
+print formattedLines
 print "done printing"
 
 """
