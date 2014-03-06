@@ -13,7 +13,7 @@
 	<div class='container'>
 	<div class="navbar navbar-inverse">
   <div class="navbar-inner">
-    <a class="brand" href="/">Zuze Weather Map</a>
+    <a class="brand" href="/">Zuse Weather Map</a>
     <ul class="nav">
       <li ><a href="/">Home</a></li>
       <li class="active"><a href="#">About Us</a></li>
