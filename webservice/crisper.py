@@ -7,7 +7,7 @@ import mez
 
 class CrisperTimer(threading.Thread):
     def run(self):
-        return
+
 
 class Crisper:
     """
@@ -24,13 +24,7 @@ class Crisper:
         self.latest_file_time = latest_file_time
         self.stor_dir = stor_dir
         self.meso = mez.Mez()
-        # TODO: call timer to repeatedly run function
-        # self.test_time()
         return
-
-    def test_time(self):
-        result = self.meso.get_data()
-        print result
 
     def store_data(self, svg):
         return
