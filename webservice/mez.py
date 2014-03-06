@@ -11,6 +11,13 @@ class Mez:
         body = resp.read()
         return self._parse_data(body)
 
+    def _set_to_string(self, data_set):
+        result_string = ''
+        for row in data_set:
+            result_string += row[0] + " " + row[1] + " " + row[2] + "\n"
+
+        return result_string
+
     def _parse_data(self, raw_data):
         result_set = []
         data_lines = raw_data.split("\n")[1:] # split by line and drop headers line (1)
@@ -21,5 +28,6 @@ class Mez:
                 if values[10] != ' ': result_set.append(result)
             except IndexError:
                 pass
-        return result_set
+
+        return self._set_to_string(result_set)
 
