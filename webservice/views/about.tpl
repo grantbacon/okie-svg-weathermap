@@ -11,7 +11,7 @@
 
 <body>
 	<div class='container'>
-	<div class="navbar">
+	<div class="navbar navbar-inverse">
   <div class="navbar-inner">
     <a class="brand" href="/">Zuze Weather Map</a>
     <ul class="nav">

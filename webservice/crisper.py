@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import urllib2
+import string
 
 #Awesome crisper made by Joel the badass
 print "about to call url"
@@ -11,6 +12,7 @@ print "Print out each line of the file"
 
 lines = body.split("\n")
 formatedLines = ""
+print lines
 for line in lines:
 	if line[0] == "STID":
 		continue

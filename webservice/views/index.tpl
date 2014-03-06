@@ -11,34 +11,50 @@
 
 <body>
 	<div class='container'>
-	<div class="navbar">
+	<div class="navbar navbar-inverse">
   <div class="navbar-inner">
     <a class="brand" href="/">Zuze Weather Map</a>
     <ul class="nav">
       <li class="active"><a href="/">Home</a></li>
-      <li ><a href="#">About Us</a></li>
+      <li ><a href="/about">About Us</a></li>
       <li><a href="http://www.mesonet.org/">Oklahoma Mesonet</a></li>
     </ul>
   </div>
 </div>
 <div class='row-fluid'>
 	<div class='span12'>
-		<h1> OK Weather </h1>
+		<div class='page-header'>
+		<h1> OK Weather Map Generator <small>Brought to you by Team Zuse</small></h1>
+	</div>
 	</div>
 </div>
 <div class='row-fluid'>
 		<div class='span8'>
-		Work in progress
+		<img src='/static/images/placeholder.jpeg' alt="weathermap-alt" height='260' width='520'/>
 		</div>
 	<div class='span4'>
-		asldkfjasldfj
+		<h4>User Controls</h4>
+		<br/><br/>
+		<div class='btn-group'>
+			<button class='btn btn-large active' id='current-button'>Current</button>
+			<button class='btn btn-large' id='historical-button'>Historical</button>
+		</div>
+		<br>
+		<div class='divider'></div>
+		<div id='segmented-control-content'>
+			<div class="well well-small" id='current-controls'>
+				<p>For current conditions the image to the left will be updated automatically.</p>
+			</div>
+		</div>
+		<form></form>
 
 	</div>
 </div>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/static/js/index.js"></script>
-<script src="/static/js/bootstrap.min.js"></script>
+
 
 
 </body>
