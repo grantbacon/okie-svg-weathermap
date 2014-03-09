@@ -2,7 +2,8 @@
 # -*- coding: utf8 -*-
 from bottle import run, route, request, template, static_file
 from os.path import dirname, abspath, join
-import subprocess
+import subprocess, Queue
+from crisper import Crisper
 
 ADDR='localhost'
 PORT='8085'
@@ -13,11 +14,11 @@ def relative_path(suffix):
 
 @route('/static/<filepath:path>')
 def static(filepath):
-	return static_file(filepath, root=relative_path(STATIC_DIR))
+    return static_file(filepath, root=relative_path(STATIC_DIR))
 
 @route('/')
 def index():
-	return template('index')
+    return template('index')
 
 @route('/about')
 def about():
@@ -25,6 +26,11 @@ def about():
 
 @route('/latest/timestamp')
 def latest_timestamp():
-    return crisp.latest_file_time
+    pass
 
-run(host=ADDR, port=PORT)
+try:
+    crisp = Crisper()
+    crisp.start()
+    run(host=ADDR, port=PORT)
+except KeyboardInterrupt:
+    crisp.join()
