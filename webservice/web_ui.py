@@ -41,6 +41,7 @@ def latest_image():
         return
 
     response.set_header('Content-Type', 'image/svg+xml')
+    response.set_header('Snapshot-Time', crisp.latest_file_time)
     response.body = image_data
     return image_data
 
