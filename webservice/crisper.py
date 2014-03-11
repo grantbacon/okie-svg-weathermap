@@ -53,7 +53,12 @@ class Crisper(threading.Thread):
         data = self.meso.get_data()
 
         try:
-            acl2 = Popen(relative_path("test.py"), stdout=PIPE, stdin=PIPE)
+            import platform
+            if platform.system() is 'Windows':
+                executable = "python " + relative_path("test.py")
+            else:
+                executable = relative_path("test.py")
+            acl2 = Popen(executable, stdout=PIPE, stdin=PIPE)
             result = acl2.communicate(input = data)[0]
         except:
             print "Error opening subprocess"
