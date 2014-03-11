@@ -53,6 +53,7 @@ class Crisper(threading.Thread):
         data = self.meso.get_data()
 
         try:
+            #windows Popen	acl2 = Popen("python " + relative_path("test.py"), stdout=PIPE, stdin=PIPE)
             acl2 = Popen(relative_path("test.py"), stdout=PIPE, stdin=PIPE)
             result = acl2.communicate(input = data)[0]
         except:
