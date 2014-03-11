@@ -1,11 +1,14 @@
+(in-package "ACL2")
 (include-book "data-structures/structures" :dir :system)
 (include-book "avl-rational-keys" :dir :teachpacks)
+(set-state-ok t)
 
 (defstructure point x y temp (:options :slot-writers))
 (defstructure vEdge s tt l r (:options :slot-writers))
 (defstructure circle c r2 (:options :slot-writers))
 (defstructure tData nPoints nEdges points edges (:options :slot-writers))
 (defstructure helper minDist u v)
+(defstructure triangle p1 p2 p3)
   
 
 (defun distanceSQ (a b)
@@ -59,7 +62,7 @@
                      (equal tt (vEdge-s edge))))
                 nEdges
                 (findEdge s tt edges (1- nEdges))))))
-         
+    
 ;returns tData
 (defun updateEdges (eI s tt bP triData)
    (let* ((edges (tData-edges triData))
@@ -169,24 +172,28 @@
            t
            (contains x (cdr xs)))))
 
-(defun prepdata (n xs ys tree)
-   (if (endp xs)
-       (avl-insert tree n ys)
-       (if (= n (caar xs))
-           (prepdata n (cdr xs) (append ys (list (cadar xs))) tree)
-           (prepdata (1+ n) (cdr xs) (list (cadar xs)) (avl-insert tree n ys)))))
-
-(defstructure triangle p1 p2 p3)
+;convert triangulation results into sorted set of 
+;edge references for triangle extraction
+(defun prepdata (nEdges n edges tree)
+   (if (< nEdges 0)
+       tree
+       (let* ((edge (cdr (avl-retrieve edges nEdges)))
+              (key (vEdge-s edge))
+              (data (cdr (avl-retrieve tree key))))
+             (prepdata (1- nEdges) (max n key) edges
+                        (avl-insert tree key (append data (list (vEdge-tt edge))))))))
 
 ;had to split up process functions to prove termination
 (defun process-help (n n2 tree tris set)
    (if (endp set)
        tris
        (let* ((aSet (cdr (avl-retrieve tree n2)))
-              (tri (if (contains (car set) aSet)
+              (bSet (cdr (avl-retrieve tree (car set))))
+              (tri (if (or (contains (car set) aSet)
+                           (contains n2 bSet))
                        (triangle n n2 (car set)) nil))
               (tris2 (if (NULL tri) tris (append tris (list tri)))))
-                 (process-help n n2 tree tris2 (cdr set)))))
+             (process-help n n2 tree tris2 (cdr set)))))
 
 (defun processEdges (n tree tris set)
    (if (endp (cdr set))
@@ -200,36 +207,20 @@
         (if (or (zp nPoints) (NULL set))
             tris
             (genTriangles (1- nPoints) (1+ n) tree (processEdges n tree tris set)))))         
-
    
 ;starter function
 (defun delstart (xs)
    (let* ((parsed (parse 0 xs (empty-tree)))
           (pair (findCLosestNeighbors 0 -1 (cdr parsed) (car parsed) 0 0))
           (edge (vEdge (point-x pair) (point-y pair) nil nil))
-          (data (tData (car parsed) 1 (cdr parsed) (avl-insert (empty-tree) 0 edge))))
-         (triangulate 0 data)))
+          (data (tData (car parsed) 1 (cdr parsed) (avl-insert (empty-tree) 0 edge)))
+          (triData (triangulate 0 data))
+          (triangles (genTriangles (tData-nPoints triData) 0
+                                   (prepdata (1- (tData-nEdges triData)) 0 (tData-edges triData) (empty-tree)) nil)))
+         triangles)) ;replace with call to svg generator
+                                   
 
- 
-;quick triangle gen test using parsed and 
-;sorted results from triangulation test
-(let* ((xs (list (list 0 1)
-                 (list 0 2)
-                 (list 0 4)
-                 (list 0 6)
-                 (list 1 3)
-                 (list 1 5)
-                 (list 1 6)
-                 (list 2 3)
-                 (list 2 4)
-                 (list 2 5)
-                 (list 3 5)
-                 (list 4 5)
-                 (list 4 6)
-                 (list 5 6))))
-      (genTriangles 7 0 (prepdata 0 xs nil (empty-tree)) nil))
-
-;quick test code
+;quick test code based on expected live input format (list of (lat, lon, temp))
 (let* ((xs (list (list 1 1 nil)
                  (list 2 21 nil)
                  (list 32 2 nil)
