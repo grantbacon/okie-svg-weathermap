@@ -29,16 +29,18 @@
 	</div>
 </div>
 <div class='row-fluid'>
-		<div class='span8'>
-		<img src='/static/images/placeholder.jpeg' alt="weathermap-alt" height='260' width='520'/>
+		<div class='span8' id='imgbox'>
+		<!-- <img id='mainImage' src='./svg_crisper/1.svg' alt="weathermap-alt" height='260' width='520'/> -->
 		</div>
-	<div class='span4'>
+	<div style='margin:auto; text-align:right;' class='span4'>
 		<h4>User Controls</h4>
 		<br/><br/>
+		<center>
 		<div class='btn-group'>
 			<button class='btn btn-large active' id='current-button'>Current</button>
 			<button class='btn btn-large' id='historical-button'>Historical</button>
 		</div>
+		</center>
 		<br>
 		<div class='divider'></div>
 		<div id='segmented-control-content'>

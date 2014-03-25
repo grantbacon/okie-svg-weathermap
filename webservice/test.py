@@ -3,7 +3,7 @@
 # This is a test file that will just echo an SVG image of a Pikachu.
 # It is to be used as a test subprocess
 
-print """<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+print """
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"

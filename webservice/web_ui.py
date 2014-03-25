@@ -8,13 +8,19 @@ from crisper import Crisper
 ADDR='localhost'
 PORT='8085'
 STATIC_DIR='static'
+IMAGE_DIR='svg_crisper'
 
 def relative_path(suffix):
     return join(dirname(abspath(__file__)), suffix)
 
+
 @route('/static/<filepath:path>')
 def static(filepath):
     return static_file(filepath, root=relative_path(STATIC_DIR))
+
+@route('/svg_crisper/<filepath:path>')
+def static(filepath):
+    return static_file(filepath, root=relative_path(IMAGE_DIR))
 
 @route('/')
 def index():
