@@ -1,4 +1,5 @@
 from urllib2 import urlopen
+from colorsys import hsv_to_rgb
 
 class Mez:
 
@@ -24,10 +25,24 @@ class Mez:
         for l in data_lines:
             values = l.split(',')
             try:
-                (result) = values[3], values[4], values[10]
+                (result) = values[3], values[4], ",".join(map(str, self._temp_to_color(float(values[10]))))
                 if values[10] != ' ': result_set.append(result)
             except IndexError:
                 pass
 
         return self._set_to_string(result_set)
 
+    def _temp_to_color(self, temp):
+        cold = 25.0
+        hot = 105.0
+
+        if temp < cold:
+            temp = cold
+        elif temp > hot:
+            temp = hot
+
+        hue = ((temp - cold) * (300.0 / (hot - cold))) / 360.0 # allow degrees from 0 - 300 as to not reuse red
+        saturation = 1.0
+        value = 1.0
+
+        return map(lambda x: int(x*255.0), hsv_to_rgb((0.8333 - hue), saturation, value)) # 0.8333 = 300/360 ('modified complement')
