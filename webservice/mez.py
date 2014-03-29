@@ -21,16 +21,22 @@ class Mez:
 
     def _parse_data(self, raw_data):
         result_set = []
+        temp_set = {}
         data_lines = raw_data.split("\n")[1:] # split by line and drop headers line (1)
         for l in data_lines:
             values = l.split(',')
             try:
-                (result) = values[3], values[4], ",".join(map(str, self._temp_to_color(float(values[10]))))
-                if values[10] != ' ': result_set.append(result)
+                if values[10] != ' ':
+                    (city, lat, long, temp) = values[1], values[3], values[4], float(values[10])
+                    color = ",".join(map(str, self._temp_to_color(temp)))
+                    result = (lat, long, color)
+                    temp_data = (city, temp)
+                    result_set.append(result)
+                    temp_set[city] = temp
             except IndexError:
                 pass
 
-        return self._set_to_string(result_set)
+        return (self._set_to_string(result_set), temp_set)
 
     def _temp_to_color(self, temp):
         cold = 25.0
