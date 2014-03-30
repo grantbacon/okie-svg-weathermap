@@ -6,7 +6,7 @@
 
 (set-state-ok t)
 
-(defstructure point x y temp (:options :slot-writers))
+(defstructure point x y color (:options :slot-writers))
 (defstructure vEdge s tt l r (:options :slot-writers))
 (defstructure circle c r2 (:options :slot-writers))
 (defstructure tData nPoints nEdges points edges (:options :slot-writers))
@@ -44,11 +44,10 @@
        (cons (str->rat (coerce (car xs) 'string))
              (parseNums (cdr xs)))))
 
-
 (defun strings->num-lists (lst)
    (if (endp lst)
        nil
-       (cons (parseNums (packets #\, (coerce (car lst) 'list)))
+       (cons (parseNums (remove nil (packets-set (list #\, #\' #\space) (coerce (car lst) 'list))))
              (strings->num-lists (cdr lst)))))
 
 (defun distanceSQ (a b)
@@ -202,7 +201,7 @@
 (defun parse (n xs ys)
    (if (endp xs)
        (cons n ys)
-       (let ((p (point (caar xs) (cadar xs) (caddar xs))))
+       (let ((p (point (caar xs) (cadar xs) (cddar xs))))
             (parse (1+ n) (cdr xs) (avl-insert ys n p)))))
  
 (defun contains (x xs)
@@ -223,8 +222,25 @@
              (prepdata (1- nEdges) (max n key) edges
                         (avl-insert tree key (append data (list (vEdge-tt edge))))))))
 
+(defun sameSide (p1 p2 a b)
+   (let* ((cp1 (crossProduct a b p1))
+          (cp2 (crossProduct a b p2)))
+         (>= (* cp1 cp2) 0)))
+
+(defun pointInTriangle (n points a b c)
+   (if (< n 0)
+       nil
+       (let ((p (cdr (avl-retrieve points n))))
+            (if (or (equal p a) (equal p b) (equal p c))
+                (pointInTriangle (1- n) points a b c)
+                (if (and (sameSide p a b c)
+                         (sameSide p b a c)
+                         (sameSide p c a b))
+                    T
+                    (pointInTriangle (1- n) points a b c))))))
+
 ;had to split up process functions to prove termination
-(defun process-help (n n2 points tree tris set)
+(defun process-help (nPoints n n2 points tree tris set)
    (if (endp set)
        tris
        (let* ((aSet (cdr (avl-retrieve tree n2)))
@@ -235,21 +251,27 @@
                                  (cdr (avl-retrieve points n2))
                                  (cdr (avl-retrieve points (car set))))
                        nil))
-              (tris2 (if (NULL tri) tris (append tris (list tri)))))
-             (process-help n n2 points tree tris2 (cdr set)))))
+              (tris2 (if (NULL tri) tris 
+                         (if (pointInTriangle (1- nPoints) points 
+                                              (triangle-p1 tri)
+                                              (triangle-p2 tri)
+                                              (triangle-p3 tri))
+                             tris
+                             (append tris (list tri))))))
+             (process-help nPoints n n2 points tree tris2 (cdr set)))))
 
-(defun processEdges (n points tree tris set)
+(defun processEdges (nPoints n points tree tris set)
    (if (endp (cdr set))
        tris
-       (processEdges n points tree 
-                     (process-help n (car set) points tree tris (cdr set))
+       (processEdges nPoints n points tree 
+                     (process-help nPoints n (car set) points tree tris (cdr set))
                      (cdr set))))
 
 (defun genTriangles (nPoints n points tree tris)
    (let ((set (cdr (avl-retrieve tree n))))
         (if (or (zp nPoints) (NULL set))
             tris
-            (genTriangles (1- nPoints) (1+ n) points tree (processEdges n points tree tris set)))))         
+            (genTriangles (1- nPoints) (1+ n) points tree (processEdges nPoints n points tree tris set)))))         
    
 ;starter function
 (defun delstart (xs)
@@ -261,23 +283,13 @@
           (triangles (genTriangles (tData-nPoints triData) 0 (tData-points triData)
                                    (prepdata (1- (tData-nEdges triData)) 0 (tData-edges triData) (empty-tree)) nil)))
          triangles)) ;replace with call to svg generator
-                                   
-
-;quick test code based on expected live input format (list of (lat, lon, temp))
-(let* ((xs (list (list 1 1 nil)
-                 (list 2 21 nil)
-                 (list 32 2 nil)
-                 (list 5 30 nil)
-                 (list 11 5 nil)
-                 (list 10 10 nil)
-                 (list 3 7 nil))))      
-      (delstart xs))
-
-(let* ((input (list "34.81,-98.02,40"
-                    "34.80,-96.67,39"
-                    "34.59,-96.67,45"
-                    "35.40,-99.90,42"
-                    "34.04,-96.35,37"
-                    "36.63,-96.81,38"))
+                         
+;quick test code based on expected live input format (list of (lat, lon, color))
+(let* ((input (list "34.81, -98.02, '15,0,255'"
+                    "34.80, -96.67, '31,0,255'"
+                    "34.59, -96.67, '0,63,255'"
+                    "35.40, -99.90, '0,15,255'"
+                    "34.04, -96.35, '63,0,255'"
+                    "36.63, -96.81, '47,0,255'"))
        (points (strings->num-lists input)))
       (delstart points))
