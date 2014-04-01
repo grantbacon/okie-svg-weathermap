@@ -43,11 +43,7 @@ class Crisper(threading.Thread):
 
     def run(self):
         while True:
-	        try:
-	            self._generate_latest()
-	        except Exception, e:
-                    print e
-                raise CrisperException("Failed in normal thread exceution", e)
+	        self._generate_latest()
         sleep(self.timeout)
 
     def _generate_latest(self):

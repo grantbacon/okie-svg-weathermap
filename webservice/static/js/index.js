@@ -95,6 +95,7 @@ $(document).ready(function(){
                     $('#imgbox').empty();
                     $('#imgbox').append(data.firstChild);
                 });
+                updateTemps();
             }
         });
 
