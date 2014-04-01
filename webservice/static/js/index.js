@@ -34,10 +34,17 @@ $(document).ready(function(){
 	var page1 = "<div class='well well-small' id='current-controls'><p>For current conditions the image to the left will be updated automatically.</p></div>";
 	var page2 = "<div class='well well-small' id='historical-controls'><p>Put some controls here dummy</p></div>";
 
+    var last_timestamp = 0;
 	/* Set the intial image to be the latest image available */
-	$.get("/latest/image", function(img) {
-		$('#imgbox').append(img.firstChild);
-	});
+        $.ajax({
+            type: 'GET',
+            url: '/latest/image',
+            success: function(data, textStatus, request) {
+                last_timestamp = request.getResponseHeader('Snapshot-Time');
+                $('#imgbox').append(data.firstChild);
+                updateTemps();
+            }
+        });
 
 	//hide the user controls depending on what button is selected in the segmented control
 	$("#current-button").click(function(){
@@ -76,15 +83,21 @@ $(document).ready(function(){
 	/*
 		Refresh the image on the page every min to see if the file name has changed. If it has, update the image. 
 	*/
+
 	setInterval(function(){
-		//clear the current image
-		$('#imgbox').empty();
-		//get the most recent image data and put it inside imgbox
-		$.get("/latest/image", function(img) {
-		$('#imgbox').append(img.firstChild);
-		updateTemps();
-	});
-	}, 60000);
+        $.get('/latest/timestamp', function(ts) {
+            if (ts != last_timestamp) {
+                last_timestamp = ts;
+                
+                $.get('/latest/image', function(data) {
+                    $('#imgbox').empty();
+                    $('#imgbox').append(data.firstChild);
+                });
+                updateTemps();
+            }
+        });
+
+	}, 10000);
 
 
 });
