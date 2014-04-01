@@ -1,7 +1,6 @@
-(include-book "data-structures/structures" :dir :system)
+(in-package "ACL2")
 (include-book "io-utilities" :dir :teachpacks) ; for rat->str
-
-(defstructure point x y color (:options :slot-writers)) ; from Delaunay.lisp
+(include-book "structures")
 
 ; estimate: 12 lines
 (defun oppositePoint (point other1 other2)
@@ -138,7 +137,7 @@
            
 ))))
 
-; sanity checks for oppositePoint
+#|; sanity checks for oppositePoint
 (oppositePoint (point 0 5 nil) (point -3 1 nil) (point 3 1 nil))
 (oppositePoint (point 5 0 nil) (point 1 -3 nil) (point 1 3 nil))
 
@@ -160,4 +159,52 @@
 
 ; test/sanity check for svgTriangle
 (svgTriangle (list (point 248 172 (list 255 0 0)) (point 248 220 (list 0 255 0)) (point 192 188 (list 0 0 255))) 3)
+|#
 
+; TEMPORARY; DO NOT PUSH
+(include-book "io-utilities-ex") ;(include-book "io-utilities-ex" :dir :teachpacks)
+(set-state-ok t)
+
+(defun file-write (lines f-out state)
+  (mv-let (error-close state)
+                 (string-list->file f-out
+                                    lines
+                                    state)
+            (if error-close
+                (mv error-close state)
+                (mv (string-append "input file: "
+                     (string-append "none"
+                      (string-append ", output file: " f-out)))
+                    state))))
+
+(defun tri-write (tri f-out state)
+  (mv-let (error-close state)
+                 (string-list->file f-out
+                                    (list
+                                     "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"400\" height=\"400\">"
+                                     tri
+                                     "</svg>")
+                                    state)
+            (if error-close
+                (mv error-close state)
+                (mv (string-append "input file: "
+                     (string-append "none"
+                      (string-append ", output file: " f-out)))
+                    state))))
+
+(defun tris-write (tris f-out state)
+  (mv-let (error-close state)
+                 (string-list->file f-out
+                                    (append
+                                     (cons "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"400\" height=\"400\">"
+                                     tris)
+                                     (list "</svg>"))
+                                    state)
+            (if error-close
+                (mv error-close state)
+                (mv (string-append "input file: "
+                     (string-append "none"
+                      (string-append ", output file: " f-out)))
+                    state))))
+
+;(tri-write (svgTriangle (list (point 248 172 (list 255 0 0)) (point 248 220 (list 0 255 0)) (point 192 188 (list 0 0 255))) 0) "output.svg" state)
