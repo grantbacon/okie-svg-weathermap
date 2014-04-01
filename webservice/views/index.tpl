@@ -29,10 +29,14 @@
 	</div>
 </div>
 <div class='row-fluid'>
-		<div class='span8' id='imgbox'>
+		<div class='span12' id='imgbox'>
 		<!-- <img id='mainImage' src='./svg_crisper/1.svg' alt="weathermap-alt" height='260' width='520'/> -->
 		</div>
-	<div style='margin:auto; text-align:right;' class='span4'>
+	</div>
+	<div class='row-fluid'>
+		<div class='span4'>
+		</div>
+	<div style='margin:auto; text-align:center;' class='span4'>
 		<h4>User Controls</h4>
 		<br/><br/>
 		<center>
@@ -51,10 +55,13 @@
 		<form></form>
 
 	</div>
+	<div class='span4'>
+	</div>
 </div>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/static/js/d3.min.js"></script>
 <script type="text/javascript" src="/static/js/index.js"></script>
 
 
