@@ -4,10 +4,12 @@ from bottle import run, route, request, template, static_file, response
 from os.path import dirname, abspath, join
 import subprocess, Queue
 from crisper import Crisper
+from json import dumps
 
 ADDR='localhost'
 PORT='8085'
 STATIC_DIR='static'
+IMAGE_DIR='svg_crisper'
 
 def relative_path(suffix):
     return join(dirname(abspath(__file__)), suffix)
@@ -15,6 +17,10 @@ def relative_path(suffix):
 @route('/static/<filepath:path>')
 def static(filepath):
     return static_file(filepath, root=relative_path(STATIC_DIR))
+
+@route('/svg_crisper/<filepath:path>')
+def static(filepath):
+    return static_file(filepath, root=relative_path(IMAGE_DIR))
 
 @route('/')
 def index():
@@ -27,6 +33,10 @@ def about():
 @route('/latest/timestamp')
 def latest_timestamp():
     return crisp.latest_file_time
+
+@route('/latest/temps')
+def latest_temps():
+    return dumps(crisp.latest_temp_data)
 
 @route('/latest/image')
 def latest_image():

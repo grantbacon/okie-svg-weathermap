@@ -34,6 +34,7 @@ class Crisper(threading.Thread):
         self.daemon = True
 
         self.latest_file_time = latest_file_time
+        self.latest_temp_data = []
         self.stor_dir = stor_dir
         self.timeout = timeout
         self.results = results
@@ -46,18 +47,14 @@ class Crisper(threading.Thread):
 	            self._generate_latest()
 	        except Exception, e:
                     print e
-	            raise CrisperException("Failed in normal thread exceution", e)
+                raise CrisperException("Failed in normal thread exceution", e)
         sleep(self.timeout)
 
     def _generate_latest(self):
-        data = self.meso.get_data()
+        (data, temps) = self.meso.get_data()
 
         try:
-            import platform
-            if platform.system() is 'Windows':
-                executable = "python " + relative_path("test.py")
-            else:
-                executable = relative_path("test.py")
+            executable = relative_path("test.py")
             acl2 = Popen(executable, stdout=PIPE, stdin=PIPE)
             result = acl2.communicate(input = data)[0]
         except:
@@ -66,6 +63,7 @@ class Crisper(threading.Thread):
         file_timestamp = self._store_data(result)
         if file_timestamp:
             self.latest_file_time = file_timestamp
+            self.latest_temp_data = temps
 
         sleep(self.timeout)
 

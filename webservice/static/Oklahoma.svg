@@ -1,9 +1,6 @@
-#!/usr/bin/python
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
 
-# This is a test file that will just echo an SVG image of a Pikachu.
-# It is to be used as a test subprocess
-
-print """
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -644,5 +641,3 @@ print """
        style="font-size:14px;fill:#000000;font-family:sans-serif">67</text>
   </g>
 </svg>
-
-"""
