@@ -621,7 +621,7 @@
        x="618.0202"
        y="264.52289"
        font-size="14px"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">99</text>
+       style="font-size:14px;fill:none; stroke-width:1px; stroke:#000000; font-family:sans-serif">99</text>
     <text
        xml:space="preserve"
        style="font-size:14px;fill:#000000;font-family:sans-serif"

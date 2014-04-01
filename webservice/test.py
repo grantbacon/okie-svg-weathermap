@@ -516,118 +516,132 @@ print """
      inkscape:label="Layer 2"
      inkscape:groupmode="layer"
      id="layer2">
+     <defs>
+    <filter id="glow">
+    <feColorMatrix type="matrix"   
+        values=
+            "0 0 0 0 0
+             0 0 0 0 0 
+             0 0 0 0 0 
+             0 0 0 1   0"/>
+            <feGaussianBlur stdDeviation="3.5" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+  </defs>
     <text
+       id="guymon"
        x="150"
        y="40"
-       font-family="sans-serif"
        font-size="14px"
-       fill="black"
-       id="text3208">Guymon</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">Guymon</text>
     <text
        id="guymon-temp"
        x="164.09137"
        y="55"
        font-size="14px"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">99</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">99</text>
     <text
        x="793"
        y="100.14286"
        font-size="14px"
        id="text3211"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">Tulsa</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">Tulsa</text>
     <text
        id="Tulsa-temp"
        x="797.04059"
        y="113.58884"
        font-size="14px"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">99</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">99</text>
     <text
        x="579.42859"
        y="201.71428"
        font-size="14px"
        id="text3213"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">Oklahoma City</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">Oklahoma City</text>
     <text
        id="Oklahoma-temp"
        x="619.40613"
        y="216.6244"
        font-size="14px"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">99</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">99</text>
     <text
        x="498.43475"
        y="311.80496"
        font-size="14px"
        id="text3215"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">Lawton</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">Lawton</text>
     <text
        id="Lawton-temp"
        x="513.15228"
        y="325.72089"
        font-size="14px"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">99</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">99</text>
     <text
        x="640.85712"
        y="404.42856"
        font-size="14px"
        id="text3217"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">Ardmore</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">Ardmore</text>
     <text
        id="Ardmore-temp"
        x="658.18274"
        y="421.68536"
        font-size="14px"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">99</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">99</text>
     <text
        x="875.57147"
        y="389"
        font-size="14px"
        id="text3219"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">Broken Bow</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">Broken Bow</text>
     <text
        id="Broken-temp"
        x="906.31476"
        y="405.52292"
        font-size="14px"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">99</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">99</text>
     <text
        x="507.14285"
        y="95.14286"
        font-size="14px"
        id="text3221"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">Enid</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">Enid</text>
     <text
        id="Enid-temp"
        x="513.06091"
        y="108.53809"
        font-size="14px"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">99</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">99</text>
     <text
        x="815.14288"
        y="193"
        font-size="14px"
        id="text3223"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">Muskogee</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">Muskogee</text>
     <text
        id="Muskogee-temp"
        x="836.2132"
        y="207.53304"
        font-size="14px"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">99</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">99</text>
     <text
        x="603.63531"
        y="250.5685"
        font-size="14px"
        id="text3327"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">Norman</text>
+       style="font-size:14px;fill:#ffffff; filter:url(#glow);font-family:sans-serif">Norman</text>
     <text
        id="Norman-temp"
        x="618.0202"
        y="264.52289"
        font-size="14px"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">99</text>
+       style="font-size:14px; fill:#ffffff; stroke:#00000000; stroke-width:2px; filter:url(#glow); font-family:sans-serif">99</text>
     <text
        xml:space="preserve"
-       style="font-size:14px;fill:#000000;font-family:sans-serif"
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif"
        x="384.36304"
        y="189.44284"
        id="text3235"
@@ -641,7 +655,7 @@ print """
        x="398.0202"
        y="203.91884"
        font-size="14px"
-       style="font-size:14px;fill:#000000;font-family:sans-serif">67</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">99</text>
   </g>
 </svg>
 

@@ -4,7 +4,6 @@ $(document).ready(function(){
 		//get the array of temps from python
 		$.get("/latest/temps", function(data){
 			var temps = $.parseJSON(data);
-			console.log(data);
 			
 			//select each city temp label and put the temp value there. 
 			var guymon = d3.select("#guymon-temp");
@@ -28,7 +27,6 @@ $(document).ready(function(){
 			var elk = d3.select('#Elk-temp');
 			elk.text(temps.Erick);
 
-			//now put those temps 
 		});
 	}
 
