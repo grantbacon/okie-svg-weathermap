@@ -3,15 +3,14 @@
 (include-book "avl-rational-keys" :dir :teachpacks)
 (include-book "io-utilities" :dir :teachpacks)
 (include-book "io-utilities-ex" :dir :teachpacks)
+(include-book "structures")
 
 (set-state-ok t)
 
-(defstructure point x y color (:options :slot-writers))
 (defstructure vEdge s tt l r (:options :slot-writers))
 (defstructure circle c r2 (:options :slot-writers))
 (defstructure tData nPoints nEdges points edges (:options :slot-writers))
 (defstructure helper minDist u v)
-(defstructure triangle p1 p2 p3)
 
 (defun stdin->string (state)
    (mv-let (chli error state)
@@ -285,11 +284,11 @@
          triangles)) ;replace with call to svg generator
                          
 ;quick test code based on expected live input format (list of (lat, lon, color))
-(let* ((input (list "34.81, -98.02, '15,0,255'"
+#|(let* ((input (list "34.81, -98.02, '15,0,255'"
                     "34.80, -96.67, '31,0,255'"
                     "34.59, -96.67, '0,63,255'"
                     "35.40, -99.90, '0,15,255'"
                     "34.04, -96.35, '63,0,255'"
                     "36.63, -96.81, '47,0,255'"))
        (points (strings->num-lists input)))
-      (delstart points))
+      (delstart points))|#

@@ -68,7 +68,9 @@
 (defun semicolon () (coerce (list (code-char 59)) 'string))
 
 (defun svgGradient (point1 point2 letter num)
-   (appendStrings
+   (if T
+       (point-color point1)
+       (appendStrings
     (list "<linearGradient id=\"fade" letter "-" num "\" " 
           "gradientUnits=\"userSpaceOnUse\" " 
           "x1=\"" (rat->str (point-x point1) 4) "\" "
@@ -80,7 +82,7 @@
           ")" (semicolon) "\" />"
           "<stop offset=\"100%\" style=\"stop-color:rgb(0,0,0)" (semicolon) "\" />"
           "</linearGradient>"
-)))
+))))
 
 ; est. lines: 10
 (defun svgDefsPolygon (point1 point2 point3 num letter)
@@ -114,8 +116,11 @@
 )))
     
 ; estimated lines: 8
-(defun svgTriangle (points num)
-   (let* ((base (minXY points))
+(defun svgTriangle (triangle num)
+   (let* ((points (list (triangle-p1 triangle)
+                        (triangle-p2 triangle)
+                        (triangle-p3 triangle)))
+          (base (minXY points))
           (rebasedPoints (rebasePoints points base))
           (point1 (first rebasedPoints))
           (point2 (second rebasedPoints))
@@ -207,4 +212,5 @@
                       (string-append ", output file: " f-out)))
                     state))))
 
-;(tri-write (svgTriangle (list (point 248 172 (list 255 0 0)) (point 248 220 (list 0 255 0)) (point 192 188 (list 0 0 255))) 0) "output.svg" state)
+;(tri-write (svgTriangle (triangle (point 248 172 "255,0,0") (point 248 172 "255,0,0") (point 192 188 "0,0,255")) 0) "output.svg" state)
+;(svgGradient (point 248 172 "255,0,0") (point 248 172 nil) "A" "0")
