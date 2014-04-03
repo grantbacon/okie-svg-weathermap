@@ -54,7 +54,7 @@ class Crisper(threading.Thread):
         (data, temps) = self.meso.get_data()
 
         try:
-            executable = relative_path("test.py")
+            executable = relative_path("mapgen.exe")
             acl2 = Popen(executable, stdout=PIPE, stdin=PIPE)
             result = acl2.communicate(input = data)[0]
         except:
