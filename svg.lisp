@@ -1,10 +1,6 @@
 (in-package "ACL2")
 (include-book "io-utilities" :dir :teachpacks) ; for rat->str
-(include-book "data-structures/structures" :dir :system)
-;(include-book "Delaunay")
-
-(defstructure point x y color (:options :slot-writers))
-(defstructure triangle p1 p2 p3)
+(include-book "structures")
 
 ; estimate: 12 lines
 (defun oppositePoint (point other1 other2)
@@ -38,8 +34,8 @@
 (defun rebasePoints (points base)
    (if (consp points)
        (let ((pt (car points)))
-            (cons (point (*(- (point-x pt) (point-x base))250)
-                         (*(- (point-y pt) (point-y base))250)
+            (cons (point (- (point-x pt) (point-x base))
+                         (- (point-y pt) (point-y base))
                          (point-color pt))
                   (rebasePoints (cdr points) base)))
        nil))
@@ -64,19 +60,19 @@
             str)))
 
 #| This function returns a string containing a semicolon.
-ACL2 displays all sorts of bugs when the semicolon character
-is used for anything other than comments. Since it doesn't
-interpret semicolons properly in string or character
-literals, this silly-looking hack is necessary.
+   ACL2 displays all sorts of bugs when the semicolon character
+   is used for anything other than comments. Since it doesn't
+   interpret semicolons properly in string or character 
+   literals, this silly-looking hack is necessary.
 |#
 (defun semicolon () (coerce (list (code-char 59)) 'string))
 
 (defun svgGradient (point1 point2 letter num)
-;   (if T
-;       (point-color point1)
+   (if nil
+       (point-color point1)
        (appendStrings
-    (list "<linearGradient id=\"fade" letter "-" num "\" "
-          "gradientUnits=\"userSpaceOnUse\" "
+    (list "<linearGradient id=\"fade" letter "-" num "\" " 
+          "gradientUnits=\"userSpaceOnUse\" " 
           "x1=\"" (rat->str (point-x point1) 4) "\" "
           "y1=\"" (rat->str (point-y point1) 4) "\" "
           "x2=\"" (rat->str (point-x point2) 4) "\" "
@@ -86,11 +82,11 @@ literals, this silly-looking hack is necessary.
           ")" (semicolon) "\" />"
           "<stop offset=\"100%\" style=\"stop-color:rgb(0,0,0)" (semicolon) "\" />"
           "</linearGradient>"
-)))
+))))
 
 ; est. lines: 10
 (defun svgDefsPolygon (point1 point2 point3 num letter)
-  (appendStrings (list
+  (appendStrings (list 
     "<polygon points=\""
       (rat->str (point-x point1) 4) "," (rat->str (point-y point1) 4) " "
       (rat->str (point-x point2) 4) "," (rat->str (point-y point2) 4) " "
@@ -124,17 +120,15 @@ literals, this silly-looking hack is necessary.
    (let* ((points (list (triangle-p1 triangle)
                         (triangle-p2 triangle)
                         (triangle-p3 triangle)))
-;          (base (minXY points))
-         (base (point 0 0 nil))
+          (base (minXY points))
           (rebasedPoints (rebasePoints points base))
           (point1 (first rebasedPoints))
           (point2 (second rebasedPoints))
           (point3 (third rebasedPoints))
           (num-str (rat->str num 0)))
-         (appendStrings 
-          (list
+         (appendStrings (list
            "<g transform=\"translate("
-           (rat->str 27000 4) " " (rat->str -7000 4)
+           (rat->str (point-x base) 4) " " (rat->str (point-y base) 4)
            ")\" shape-rendering=\"crispEdges\">"
            (svgDefs point1 point2 point3 num-str)
            "<polygon points=\""
@@ -157,10 +151,10 @@ literals, this silly-looking hack is necessary.
 
 ; sanity check for rebasePoints
 (let ((lst (list (point 3 3 nil) (point -3 5 nil) (point 4 0 nil))))
-(rebasePoints lst (minXY lst)))
+     (rebasePoints lst (minXY lst)))
 
 ; test/sanity check for svgGradient
-(svgGradient (point 5 0 (list 255 128 0)) (point 1 -3 nil) "A" "1")
+;(svgGradient (point 5 0 (list 255 128 0)) (point 1 -3 nil) "A" "1")
 
 ; test/sanity check for svgDefsPolygon
 (svgDefsPolygon (point 0 5 nil) (point -3 1 nil) (point 3 1 nil) "3" "A")
@@ -169,13 +163,11 @@ literals, this silly-looking hack is necessary.
 (svgDefs (point 0 5 nil) (point -3 1 nil) (point 3 1 nil) "3")
 
 ; test/sanity check for svgTriangle
-(svgTriangle (triangle (point 248 172 (list 255 0 0))
-                   (point 248 220 (list 0 255 0))
-                   (point 192 188 (list 0 0 255))) 3)
+(svgTriangle (list (point 248 172 (list 255 0 0)) (point 248 220 (list 0 255 0)) (point 192 188 (list 0 0 255))) 3)
 |#
 
 ; TEMPORARY; DO NOT PUSH
-(include-book "io-utilities-ex" :dir :teachpacks)
+(include-book "io-utilities-ex") ;(include-book "io-utilities-ex" :dir :teachpacks)
 (set-state-ok t)
 
 (defun file-write (lines f-out state)

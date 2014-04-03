@@ -324,10 +324,10 @@
                  (string-list->stdout ;input-lines
                   (append
                                      (cons "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"4000\" height=\"4000\">"
-                                     
+                                     (cons "<g transform=\"scale(100) translate(103 38) scale(1 -1)\">"
                                      
                                       (svgLines (delstart (strings->num-lists input-lines)) 0)
-                                     )(list "</svg>"))
+                                     ))(list "</g>" "</svg>"))
                                        state)
             (if error-close
                 (mv error-close state)
