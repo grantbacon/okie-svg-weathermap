@@ -271,7 +271,7 @@
 
 (defun genTriangles (nPoints n points tree tris)
    (let ((set (cdr (avl-retrieve tree n))))
-        (if (or (zp nPoints) (NULL set))
+        (if (or (zp nPoints) nil);(NULL set))
             tris
             (genTriangles (1- nPoints) (1+ n) points tree (processEdges nPoints n points tree tris set)))))         
    
@@ -323,8 +323,8 @@
          (mv-let (error-close state)
                  (string-list->stdout ;input-lines
                   (append
-                                     (cons "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"4000\" height=\"4000\">"
-                                     (cons "<g transform=\"scale(100) translate(103 38) scale(1 -1)\">"
+                                     (cons "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"778\" height=\"375\">"
+                                     (cons "<g transform=\"scale(90) translate(103 38) scale(1 -1)\">"
                                      
                                       (svgLines (delstart (strings->num-lists input-lines)) 0)
                                      ))(list "</g>" "</svg>"))
