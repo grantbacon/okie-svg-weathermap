@@ -129,7 +129,7 @@
          (appendStrings (list
            "<g transform=\"translate("
            (rat->str (point-x base) 4) " " (rat->str (point-y base) 4)
-           ")\" shape-rendering=\"crispEdges\">"
+           ")\">"
            (svgDefs point1 point2 point3 num-str)
            "<polygon points=\""
              (rat->str (point-x point1) 4) "," (rat->str (point-y point1) 4) " "
