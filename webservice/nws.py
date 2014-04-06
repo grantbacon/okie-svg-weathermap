@@ -35,7 +35,11 @@ class NWS(object):
         temp = None
         for line in resp:
             if line.startswith(loc.city):
-                temp = int(line[25:].split()[0])
+                # if data for location is unavailable, try using slightly older data
+                if len(line) <= 25: continue
+                data = line[25:].split()
+                if not data: continue
+                temp = int(data[0])
                 break
         if not temp: return ''
 
