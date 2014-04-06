@@ -323,11 +323,10 @@
          (mv-let (error-close state)
                  (string-list->stdout ;input-lines
                   (append
-                                     (cons "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"778\" height=\"375\">"
-                                     (cons "<g transform=\"scale(90) translate(103 38) scale(1 -1)\">"
+                                     (cons "<g transform=\"translate(8.6472902 5.1103759) scale(111.5435 135.7388) translate(103 37) scale(1 -1)\">"
                                      
                                       (svgLines (delstart (strings->num-lists input-lines)) 0)
-                                     ))(list "</g>" "</svg>"))
+                                     )(list "</g>" "</svg>"))
                                        state)
             (if error-close
                 (mv error-close state)
