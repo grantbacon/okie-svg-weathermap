@@ -54,7 +54,7 @@ class Crisper(threading.Thread):
         data += self.nws.get_data()
 
         try:
-            executable = relative_path("/tmp/tempcolor")
+            executable = relative_path("mapgen")
             acl2 = Popen(executable, stdout=PIPE, stdin=PIPE)
             temperatureMap = acl2.communicate(input = data)[0]
             result = blender.generateSVG(temperatureMap)
