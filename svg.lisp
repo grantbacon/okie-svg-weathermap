@@ -1,7 +1,6 @@
-(include-book "data-structures/structures" :dir :system)
+(in-package "ACL2")
 (include-book "io-utilities" :dir :teachpacks) ; for rat->str
-
-(defstructure point x y color (:options :slot-writers)) ; from Delaunay.lisp
+(include-book "structures")
 
 ; estimate: 12 lines
 (defun oppositePoint (point other1 other2)
@@ -69,7 +68,9 @@
 (defun semicolon () (coerce (list (code-char 59)) 'string))
 
 (defun svgGradient (point1 point2 letter num)
-   (appendStrings
+   (if nil
+       (point-color point1)
+       (appendStrings
     (list "<linearGradient id=\"fade" letter "-" num "\" " 
           "gradientUnits=\"userSpaceOnUse\" " 
           "x1=\"" (rat->str (point-x point1) 4) "\" "
@@ -81,7 +82,7 @@
           ")" (semicolon) "\" />"
           "<stop offset=\"100%\" style=\"stop-color:rgb(0,0,0)" (semicolon) "\" />"
           "</linearGradient>"
-)))
+))))
 
 ; est. lines: 10
 (defun svgDefsPolygon (point1 point2 point3 num letter)
@@ -115,8 +116,11 @@
 )))
     
 ; estimated lines: 8
-(defun svgTriangle (points num)
-   (let* ((base (minXY points))
+(defun svgTriangle (triangle num)
+   (let* ((points (list (triangle-p1 triangle)
+                        (triangle-p2 triangle)
+                        (triangle-p3 triangle)))
+          (base (minXY points))
           (rebasedPoints (rebasePoints points base))
           (point1 (first rebasedPoints))
           (point2 (second rebasedPoints))
@@ -125,7 +129,7 @@
          (appendStrings (list
            "<g transform=\"translate("
            (rat->str (point-x base) 4) " " (rat->str (point-y base) 4)
-           ")\" shape-rendering=\"crispEdges\">"
+           ")\">"
            (svgDefs point1 point2 point3 num-str)
            "<polygon points=\""
              (rat->str (point-x point1) 4) "," (rat->str (point-y point1) 4) " "
@@ -138,7 +142,7 @@
            
 ))))
 
-; sanity checks for oppositePoint
+#|; sanity checks for oppositePoint
 (oppositePoint (point 0 5 nil) (point -3 1 nil) (point 3 1 nil))
 (oppositePoint (point 5 0 nil) (point 1 -3 nil) (point 1 3 nil))
 
@@ -160,4 +164,53 @@
 
 ; test/sanity check for svgTriangle
 (svgTriangle (list (point 248 172 (list 255 0 0)) (point 248 220 (list 0 255 0)) (point 192 188 (list 0 0 255))) 3)
+|#
 
+; TEMPORARY; DO NOT PUSH
+(include-book "io-utilities-ex") ;(include-book "io-utilities-ex" :dir :teachpacks)
+(set-state-ok t)
+
+(defun file-write (lines f-out state)
+  (mv-let (error-close state)
+                 (string-list->file f-out
+                                    lines
+                                    state)
+            (if error-close
+                (mv error-close state)
+                (mv (string-append "input file: "
+                     (string-append "none"
+                      (string-append ", output file: " f-out)))
+                    state))))
+
+(defun tri-write (tri f-out state)
+  (mv-let (error-close state)
+                 (string-list->file f-out
+                                    (list
+                                     "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"400\" height=\"400\">"
+                                     tri
+                                     "</svg>")
+                                    state)
+            (if error-close
+                (mv error-close state)
+                (mv (string-append "input file: "
+                     (string-append "none"
+                      (string-append ", output file: " f-out)))
+                    state))))
+
+(defun tris-write (tris f-out state)
+  (mv-let (error-close state)
+                 (string-list->file f-out
+                                    (append
+                                     (cons "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"400\" height=\"400\">"
+                                     tris)
+                                     (list "</svg>"))
+                                    state)
+            (if error-close
+                (mv error-close state)
+                (mv (string-append "input file: "
+                     (string-append "none"
+                      (string-append ", output file: " f-out)))
+                    state))))
+
+;(tri-write (svgTriangle (triangle (point 248 172 "255,0,0") (point 248 172 "255,0,0") (point 192 188 "0,0,255")) 0) "output.svg" state)
+;(svgGradient (point 248 172 "255,0,0") (point 248 172 nil) "A" "0")

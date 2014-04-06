@@ -4,6 +4,8 @@
 (include-book "io-utilities" :dir :teachpacks)
 (include-book "io-utilities-ex" :dir :teachpacks)
 
+(include-book "svg")
+
 (set-state-ok t)
 
 (defstructure point x y color (:options :slot-writers))
@@ -201,7 +203,7 @@
 (defun parse (n xs ys)
    (if (endp xs)
        (cons n ys)
-       (let ((p (point (caar xs) (cadar xs) (cddar xs))))
+       (let ((p (point (cadar xs) (caar xs) (cddar xs))))
             (parse (1+ n) (cdr xs) (avl-insert ys n p)))))
  
 (defun contains (x xs)
@@ -269,7 +271,7 @@
 
 (defun genTriangles (nPoints n points tree tris)
    (let ((set (cdr (avl-retrieve tree n))))
-        (if (or (zp nPoints) (NULL set))
+        (if (or (zp nPoints) nil);(NULL set))
             tris
             (genTriangles (1- nPoints) (1+ n) points tree (processEdges nPoints n points tree tris set)))))         
    
@@ -283,7 +285,14 @@
           (triangles (genTriangles (tData-nPoints triData) 0 (tData-points triData)
                                    (prepdata (1- (tData-nEdges triData)) 0 (tData-edges triData) (empty-tree)) nil)))
          triangles)) ;replace with call to svg generator
-                         
+    
+
+(defun svgLines (triangulation i)
+   (if (consp triangulation)
+       (cons (svgTriangle (car triangulation) i)
+             (svgLines (cdr triangulation) (1+ i)))
+       nil))                         
+                                                                   
 ;quick test code based on expected live input format (list of (lat, lon, color))
 (let* ((input (list "34.81, -98.02, '15,0,255'"
                     "34.80, -96.67, '31,0,255'"
@@ -292,4 +301,36 @@
                     "34.04, -96.35, '63,0,255'"
                     "36.63, -96.81, '47,0,255'"))
        (points (strings->num-lists input)))
-      (delstart points))
+      (svgLines  (delstart points) 0))
+
+(defun string-list->stdout (strli state)
+  (let ((channel *standard-co*))
+     (if (null channel)
+         (mv "Error while opening stdout"
+             state)
+         (mv-let (channel state)
+                 (write-all-strings strli channel state)
+            (let ((state (close-output-channel channel state)))
+              (mv nil state))))))
+
+
+
+(defun main (state)
+  (mv-let (input-lines state)
+          (stdin->lines state)
+     (if nil
+         (mv nil state)
+         (mv-let (error-close state)
+                 (string-list->stdout ;input-lines
+                  (append
+                                     (cons "<g transform=\"translate(8.6472902 5.1103759) scale(111.5435 135.7388) translate(103 37) scale(1 -1)\">"
+                                     
+                                      (svgLines (delstart (strings->num-lists input-lines)) 0)
+                                     )(list "</g>" "</svg>"))
+                                       state)
+            (if error-close
+                (mv error-close state)
+                (mv (string-append "input file: "
+                     (string-append "stdin"
+                      (string-append ", output file: " "stdout")))
+                    state))))))

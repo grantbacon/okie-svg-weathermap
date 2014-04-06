@@ -5,6 +5,8 @@ from subprocess import Popen, PIPE
 from os.path import dirname, abspath, join
 import threading
 import mez
+import nws
+import blender
 
 def relative_path(suffix):
     return join(dirname(abspath(__file__)), suffix)
@@ -40,6 +42,7 @@ class Crisper(threading.Thread):
         self.results = results
 
         self.meso = mez.Mez()
+        self.nws = nws.NWS()
 
     def run(self):
         while True:
@@ -48,11 +51,13 @@ class Crisper(threading.Thread):
 
     def _generate_latest(self):
         (data, temps) = self.meso.get_data()
+        data += self.nws.get_data()
 
         try:
-            executable = relative_path("test.py")
+            executable = relative_path("/tmp/tempcolor")
             acl2 = Popen(executable, stdout=PIPE, stdin=PIPE)
-            result = acl2.communicate(input = data)[0]
+            temperatureMap = acl2.communicate(input = data)[0]
+            result = blender.generateSVG(temperatureMap)
         except:
             print "Error opening subprocess"
 
