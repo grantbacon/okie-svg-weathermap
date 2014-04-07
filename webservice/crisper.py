@@ -50,7 +50,7 @@ class Crisper(threading.Thread):
         sleep(self.timeout)
 
     def _generate_latest(self):
-        (data, temps) = self.meso.get_data()
+        data, temps, minPressure, maxPressure = self.meso.get_pressure_data()
         data += self.nws.get_data()
         result = ""
         try:
