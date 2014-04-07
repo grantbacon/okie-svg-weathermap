@@ -13,7 +13,7 @@ $(document).ready(function(){
 			var okc = d3.select("#Oklahoma-temp");
 			okc.text(temps["Oklahoma City West"]);
 			var lawton = d3.select("#Lawton-temp");
-			lawton.text(temps.Apache);
+			lawton.text(temps.Acme);
 			var ardmore = d3.select("#Ardmore-temp");
 			ardmore.text(temps.Ardmore);
 			var broken = d3.select("#Broken-temp");
@@ -32,7 +32,7 @@ $(document).ready(function(){
 
 	//html content for the 1st segment of the segmented control
 	var page1 = "<div class='well well-small' id='current-controls'><p>For current conditions the image to the left will be updated automatically.</p></div>";
-	var page2 = "<div class='well well-small' id='historical-controls'><p>Put some controls here dummy</p></div>";
+	var page2 = "<div class='well well-small' id='historical-controls'><p>This feature is not currently implemented. Please check back later for updates!</p></div>";
 
     var last_timestamp = 0;
 	/* Set the intial image to be the latest image available */

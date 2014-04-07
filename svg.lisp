@@ -167,7 +167,8 @@
 |#
 
 ; TEMPORARY; DO NOT PUSH
-(include-book "io-utilities-ex") ;(include-book "io-utilities-ex" :dir :teachpacks)
+;(include-book "io-utilities-ex") 
+(include-book "io-utilities-ex" :dir :teachpacks)
 (set-state-ok t)
 
 (defun file-write (lines f-out state)

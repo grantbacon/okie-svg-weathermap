@@ -40,7 +40,7 @@ class Crisper(threading.Thread):
         self.stor_dir = stor_dir
         self.timeout = timeout
         self.results = results
-
+        self.latest_file_name = ""
         self.meso = mez.Mez()
         self.nws = nws.NWS()
 
@@ -52,7 +52,7 @@ class Crisper(threading.Thread):
     def _generate_latest(self):
         (data, temps) = self.meso.get_data()
         data += self.nws.get_data()
-
+        result = ""
         try:
             executable = relative_path("mapgen")
             acl2 = Popen(executable, stdout=PIPE, stdin=PIPE)

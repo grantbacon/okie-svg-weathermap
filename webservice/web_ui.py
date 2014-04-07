@@ -7,7 +7,7 @@ from crisper import Crisper
 from json import dumps
 
 ADDR='localhost'
-PORT='8085'
+PORT='8081'
 STATIC_DIR='static'
 IMAGE_DIR='svg_crisper'
 
