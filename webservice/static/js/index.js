@@ -4,35 +4,76 @@ $(document).ready(function(){
 		//get the array of temps from python
 		$.get("/latest/temps", function(data){
 			var temps = $.parseJSON(data);
-			
+			console.log("updateTemps has been called.");
 			//select each city temp label and put the temp value there. 
 			var guymon = d3.select("#guymon-temp");
-			guymon.text(temps.Goodwell);
+			var temp = temps.Goodwell;
+			if(temp == null)
+				guymon.text(temps.Hooker);
+			else
+				guymon.text(temps.Goodwell);
 			var tulsa = d3.select("#Tulsa-temp");
-			tulsa.text(temps.Tulsa);
+			temp = temps.Tulsa;
+			if(temp == null)
+				tulsa.text(temps.Claremore);
+			else
+				tulsa.text(temps.Tulsa);
 			var okc = d3.select("#Oklahoma-temp");
-			okc.text(temps["Oklahoma City West"]);
+			temp = temps["Oklahoma City West"];
+			if(temp == null)
+				okc.text(temps["Oklahoma City East"]);
+			else
+				okc.text(temps["Oklahoma City West"]);
 			var lawton = d3.select("#Lawton-temp");
-			lawton.text(temps.Acme);
+			temp = temps.Apache;
+			if(temp == null)
+				lawton.text(temps.Acme);
+			else
+				lawton.text(temps.Apache);
 			var ardmore = d3.select("#Ardmore-temp");
-			ardmore.text(temps.Ardmore);
+			temp = temps.Tulsa;
+			if(temp == null)
+				ardmore.text(temps.Burneyville);
+			else
+				ardmore.text(temps.Ardmore);
 			var broken = d3.select("#Broken-temp");
 			broken.text(temps['Broken Bow']);
+			temp = temps['Broken Bow'];
+			if(temp == null)
+				broken.text(temps.Idabel);
+			else
+				broken.text(temps["Broken Bow"]);
 			var enid = d3.select("#Enid-temp");
-			enid.text(temps.Lahoma);
+			temp = temps.Lahoma;
+			if(temp == null)
+				enid.text(temps.Fairview);
+			else
+				enid.text(temps.Lahoma);
 			var norman = d3.select("#Norman-temp");
-			norman.text(temps.Norman);
+			temp = temps.Norman;
+			if(temp == null)
+				norman.text(temps.Washington);
+			else
+				norman.text(temps.Norman);
 			var Muskogee = d3.select("#Muskogee-temp");
-			Muskogee.text(temps.Porter);
+			temp = temps.Erick;
+			if(temp == null)
+				Muskogee.text(temps.Claremore);
+			else
+				Muskogee.text(temps.Erick);
 			var elk = d3.select('#Elk-temp');
-			elk.text(temps.Erick);
+			temp = temps.Erick;
+			if(temp == null)
+				elk.text(temps.Cheyenne);
+			else
+				elk.text(temps.Erick);
 
 		});
 	}
 
 	//html content for the 1st segment of the segmented control
-	var page1 = "<div class='well well-small' id='current-controls'><p>For current conditions the image to the left will be updated automatically.</p></div>";
-	var page2 = "<div class='well well-small' id='historical-controls'><p>This feature is not currently implemented. Please check back later for updates!</p></div>";
+	var page1 = "<div class='well well-small' id='current-controls'><p>The temperature map will update automatically as long as this tab is selected.</p></div>";
+	var page2 = "<div class='well well-small' id='historical-controls'><p>The pressure map will be updated automatically as long this tab is selected.</p></div>";
 
     var last_timestamp = 0;
 	/* Set the intial image to be the latest image available */
@@ -92,9 +133,12 @@ $(document).ready(function(){
                 $.get('/latest/image', function(data) {
                     $('#imgbox').empty();
                     $('#imgbox').append(data.firstChild);
+                    updateTemps();
+                    console.log("Hey yo I updated your picture.");
                 });
-                updateTemps();
+                
             }
+            //updateTemps();
         });
 
 	}, 10000);

@@ -22,22 +22,37 @@
   </div>
 </div>
 <div class='row-fluid'>
-	<div class='span12'>
+	<div class='span12' align='center'>
 		<h1> OK Weather </h1>
 	</div>
 </div>
 <div class='row-fluid'>
-		<div class='span8'>
-		Work in progress
+		<div class='span2'>
 		</div>
-	<div class='span4'>
-		asldkfjasldfj
+	<div class='span8' align='center'>
+	
+				<h3>Overview</h3>
+		<p>
+Our goal is to create an ACL2 and web application that will allow the coloring of weather maps using publicly available data from the National Weather Service. This data consists of various information at specific geographic points. We will parse this data and use an ACL2 component to generate colors to correspond to the weather in between data points given from the National Weather Service. 
+		</p>
+
+			<h3>Software Features</h3>
+			<p>
+	The primary goal of our application will be to query weather data from the National Weather Service APIs, then using that data, populate a blank map with temperatures and colors corresponding to temperature. Then, update the front end user interface to display our newly generated map. The interface will attempt to be as minimalistic as possible thereby minimizing distraction from the actual product. While this interface will allow for little additional features outside of extra maps, the entire project is primarily a proof of concept before marketing to popular weather service companies. 
+			</p>
+			
 
 	</div>
+	<div class='span2'></div>
+</div>
+<div class='row-fluid'>
+	<div class='span12'>
+		<img src="./static/overview.png" alt="flowchart of our software">
+	</div>
+
 </div>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="/static/js/index.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 
 
