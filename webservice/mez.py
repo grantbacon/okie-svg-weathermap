@@ -1,5 +1,4 @@
 from urllib2 import urlopen
-from colorsys import hsv_to_rgb
 
 class Mez:
 
@@ -38,18 +37,30 @@ class Mez:
 
         return (self._set_to_string(result_set), temp_set)
 
+# custom HSV to RGB converter that switches blue and cyan so that cyan is colder
+def hue_to_rgb(hue):
+	rgbColors = [
+		(255, 0, 0),
+		(255, 255, 0),
+		(0, 255, 0),
+		(0, 0, 255),
+		(0, 255, 255),
+		(255, 0, 255),
+	]
+	which = int(hue) / 60
+	factor = (hue % 60.0) / 60.0
+	rgbColor = map(lambda a,b: int(a*(1-factor)+b*factor), rgbColors[which], rgbColors[which+1])
+	return rgbColor
+
 def temp_to_color(temp):
-    cold = 25.0
-    hot = 105.0
+    cold = 0.0
+    hot = 100.0
 
     if temp < cold:
         temp = cold
     elif temp > hot:
         temp = hot
 
-    hue = ((temp - cold) * (300.0 / (hot - cold))) / 360.0 # allow degrees from 0 - 300 as to not reuse red
-    saturation = 1.0
-    value = 1.0
-
-    return map(lambda x: int(x*255.0), hsv_to_rgb((0.8333 - hue), saturation, value)) # 0.8333 = 300/360 ('modified complement')
+    hue = ((temp - cold) * (300.0 / (hot - cold))) # allow degrees from 0 - 300 as to not reuse red
+    return hue_to_rgb(300 - hue)
 
