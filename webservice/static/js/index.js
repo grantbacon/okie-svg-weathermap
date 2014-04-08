@@ -129,7 +129,6 @@ $(document).ready(function(){
         $.get('/latest/timestamp', function(ts) {
             if (ts != last_timestamp) {
                 last_timestamp = ts;
-                
                  $.ajax({
 				            type: 'GET',
 				            url: '/latest/image',
@@ -138,12 +137,10 @@ $(document).ready(function(){
                 		$('#imgbox').append(data.firstChild);
                			 updateTemps();
             				}
-            				});
-                
+            			});                
             }
-            //updateTemps();
+            
         });
-
 	}, 10000);
 
 
