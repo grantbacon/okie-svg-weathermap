@@ -512,7 +512,7 @@ COUNTY_MAP = '''<g id="layer1">
        <image
        y="144.01643"
        x="116.57364"
-       id="image3335"
+       id="legend-image"
        xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAADNCAIAAACgi2BnAAAAA3NCSVQICAjb4U/gAAAQ8klEQVR4
 nO1de1AT59p/cg8QQlDUAseSj05bbT3YakmsgmK9AB4oF6m0FUSRsYPDWBzPV6tyAO3Fdqj1ONW2
 Tj8rTEWsrdeCUkYhgm3tBWmZgfpB80FJuVUIYNRskr18f6yTQ8kNdjfsEvjN/pG82d1nf3ney77P

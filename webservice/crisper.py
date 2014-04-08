@@ -44,6 +44,9 @@ class Crisper(threading.Thread):
         self.latest_file_name = ""
         self.meso = mez.Mez()
         self.nws = nws.NWS()
+        self.latest_file_name_pressure = ""
+        self.latest_file_name_temp = ""
+
 
     def run(self):
         while True:
@@ -53,7 +56,7 @@ class Crisper(threading.Thread):
 
     def _generate_latest_pressure(self):
         data, temps, minPressure, maxPressure = self.meso.get_pressure_data()
-        data += self.nws.get_pressure_data()
+        data += self.nws.get_pressure_data(0,100)
         result = ""
         try:
             executable = relative_path("mapgen")
@@ -63,12 +66,12 @@ class Crisper(threading.Thread):
         except:
             print "Error opening subprocess"
 
-        file_timestamp = self._store_data(result)
+        file_timestamp = self._store_pressure_data(result)
         if file_timestamp:
-            self.latest_file_time = file_timestamp
-            self.latest_temp_data = temps
-
+            self.latest_file_time_pressure = file_timestamp
+            self.latest_pressure_data = temps
         sleep(self.timeout)
+        
 
     def _generate_latest_temp(self):
         (data, temps) = self.meso.get_data()
@@ -82,14 +85,14 @@ class Crisper(threading.Thread):
         except:
             print "Error opening subprocess"
 
-        file_timestamp = self._store_data(result)
+        file_timestamp = self._store_temp_data(result)
         if file_timestamp:
-            self.latest_file_time = file_timestamp
+            self.latest_file_time_temp = file_timestamp
             self.latest_temp_data = temps
 
-        sleep(self.timeout)
+        
 
-    def _store_data(self, svg):
+    def _store_temp_data(self, svg):
         now = str(int(time()))
 
         try:
@@ -98,6 +101,22 @@ class Crisper(threading.Thread):
             file.write(svg)
             file.close()
             self.latest_file_name = new_filename
+        except IOError, i:
+            print "Could not create file @" + now
+            print i
+
+        print "Created new file: " + now + ".svg"
+        return now
+
+    def _store_pressure_data(self, svg):
+        now = str(int(time()))
+
+        try:
+            new_filename = relative_path(self.stor_dir) + "/" + now + '.svg'
+            file = open(new_filename, 'w+')
+            file.write(svg)
+            file.close()
+            self.latest_file_name_pressure = new_filename
         except IOError, i:
             print "Could not create file @" + now
             print i

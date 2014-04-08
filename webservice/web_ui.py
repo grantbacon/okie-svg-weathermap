@@ -43,15 +43,15 @@ def latest_temps():
     return dumps(crisp.latest_pressure_data)
 
 @route('/latest/image/pressure')
-def latest_image():
+def latest_image_pressure():
     try:
-        file = open(crisp.latest_file_name, 'r')
+        file = open(crisp.latest_file_name_pressure, 'r')
         image_data = file.read()
         file.close()
     except IOError, i:
         print "[ERROR]: " + i
         response.status = 500
-        response.body = 'Error opening latest image'
+        response.body = 'Error opening latest pressure image'
         return
 
     response.set_header('Content-Type', 'image/svg+xml')
@@ -60,7 +60,7 @@ def latest_image():
     return image_data
 
 @route('/latest/image/temp')
-def latest_image():
+def latest_image_temp():
     try:
         file = open(crisp.latest_file_name, 'r')
         image_data = file.read()
@@ -68,7 +68,7 @@ def latest_image():
     except IOError, i:
         print "[ERROR]: " + i
         response.status = 500
-        response.body = 'Error opening latest image'
+        response.body = 'Error opening latest temperature image'
         return
 
     response.set_header('Content-Type', 'image/svg+xml')

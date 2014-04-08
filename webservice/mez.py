@@ -75,18 +75,19 @@ class Mez:
 
 # custom HSV to RGB converter that switches blue and cyan so that cyan is colder
 def hue_to_rgb(hue):
-	rgbColors = [
-		(255, 0, 0),
-		(255, 255, 0),
-		(0, 255, 0),
-		(0, 0, 255),
-		(0, 255, 255),
-		(255, 0, 255),
-	]
-	which = int(hue) / 60
-	factor = (hue % 60.0) / 60.0
-	rgbColor = map(lambda a,b: int(a*(1-factor)+b*factor), rgbColors[which], rgbColors[which+1])
-	return rgbColor
+    rgbColors = [
+        (255, 0, 0),
+        (255, 255, 0),
+        (0, 255, 0),
+        (0, 0, 255),
+        (0, 255, 255),
+        (255, 0, 255),
+    ]
+    hue %= 300
+    which = int(hue) / 60
+    factor = (hue % 60.0) / 60.0
+    rgbColor = map(lambda a,b: int(a*(1-factor)+b*factor), rgbColors[which], rgbColors[which+1])
+    return rgbColor
 
 def temp_to_color(temp):
     cold = 0.0
