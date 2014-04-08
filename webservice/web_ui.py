@@ -38,7 +38,28 @@ def latest_timestamp():
 def latest_temps():
     return dumps(crisp.latest_temp_data)
 
-@route('/latest/image')
+@route('/latest/pressures')
+def latest_temps():
+    return dumps(crisp.latest_pressure_data)
+
+@route('/latest/image/pressure')
+def latest_image():
+    try:
+        file = open(crisp.latest_file_name, 'r')
+        image_data = file.read()
+        file.close()
+    except IOError, i:
+        print "[ERROR]: " + i
+        response.status = 500
+        response.body = 'Error opening latest image'
+        return
+
+    response.set_header('Content-Type', 'image/svg+xml')
+    response.set_header('Snapshot-Time', crisp.latest_file_time)
+    response.body = image_data
+    return image_data
+
+@route('/latest/image/temp')
 def latest_image():
     try:
         file = open(crisp.latest_file_name, 'r')

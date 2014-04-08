@@ -46,10 +46,37 @@ class NWS(object):
         color = ",".join(map(str, temp_to_color(temp)))
         return '%f %f %s\n' % (loc.lat, loc.long, color)
 
-    def get_data(self):
+    def _get_pressure(self, loc, minPres, maxPres):
+        url = 'http://www.nws.noaa.gov/view/prodsByState.php?state=%s&prodtype=hourly' % loc.state
+        resp = urlopen(url)
+        if not resp: return ''
+
+        temp = None
+        for line in resp:
+            if line.startswith(loc.city):
+                # if data for location is unavailable, try using slightly older data
+                if len(line) <= 25: continue
+                data = line[25:].split()
+                if not data: continue
+                if len(data) < 5: continue
+                pres = float(data[4].strip('SFR'))
+                break
+        if not temp: return ''
+
+        color = pres_to_color(pres, minPres, maxPres)
+        return '%f %f %s\n' % (loc.lat, loc.long, color)
+
+    def get_temp_data(self):
         result_string = ''
         for loc in self.locations:
             result_string += self._get_temp(loc)
         return result_string
+
+    def get_pressure_data(self, minPres, maxPres):
+        result_string = ''
+        for loc in self.locations:
+            result_string += self._get_pressure(loc, minPres, maxPres)
+        return result_string
+
 
 

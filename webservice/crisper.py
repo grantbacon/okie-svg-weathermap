@@ -37,6 +37,7 @@ class Crisper(threading.Thread):
 
         self.latest_file_time = latest_file_time
         self.latest_temp_data = []
+        self.latest_pressure_data = []
         self.stor_dir = stor_dir
         self.timeout = timeout
         self.results = results
@@ -46,12 +47,32 @@ class Crisper(threading.Thread):
 
     def run(self):
         while True:
-	        self._generate_latest()
+            self._generate_latest_temp()
+            self._generate_latest_pressure()
         sleep(self.timeout)
 
-    def _generate_latest(self):
+    def _generate_latest_pressure(self):
+        data, temps, minPressure, maxPressure = self.meso.get_pressure_data()
+        data += self.nws.get_pressure_data()
+        result = ""
+        try:
+            executable = relative_path("mapgen")
+            acl2 = Popen(executable, stdout=PIPE, stdin=PIPE)
+            temperatureMap = acl2.communicate(input = data)[0]
+            result = blender.generateSVG(temperatureMap)
+        except:
+            print "Error opening subprocess"
+
+        file_timestamp = self._store_data(result)
+        if file_timestamp:
+            self.latest_file_time = file_timestamp
+            self.latest_temp_data = temps
+
+        sleep(self.timeout)
+
+    def _generate_latest_temp(self):
         (data, temps) = self.meso.get_data()
-        data += self.nws.get_data()
+        data += self.nws.get_temp_data()
         result = ""
         try:
             executable = relative_path("mapgen")

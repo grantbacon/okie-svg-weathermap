@@ -71,21 +71,41 @@ $(document).ready(function(){
 		});
 	}
 
+	function updateImage(){
+		if($('#current-button').hasClass("active")){
+      	$.ajax({
+          type: 'GET',
+          url: '/latest/image/temp',
+          success: function(data, textStatus, request) {
+      		last_timestamp = request.getResponseHeader('Snapshot-Time');
+      		$('#imgbox').empty();
+      		$('#imgbox').append(data.firstChild);
+     			 updateTemps();
+  				}
+  			});    
+      }
+      else{
+      	$.ajax({
+          type: 'GET',
+          url: '/latest/image/pressure',
+          success: function(data, textStatus, request) {
+          	console.log("hello!");
+      		last_timestamp = request.getResponseHeader('Snapshot-Time');
+      		$('#imgbox').empty();
+      		$('#imgbox').append(data.firstChild);
+     			 updateTemps();
+  				}
+  			}); 
+       }
+	}
+
 	//html content for the 1st segment of the segmented control
 	var page1 = "<div class='well well-small' id='current-controls'><p>The temperature map will update automatically as long as this tab is selected.</p></div>";
 	var page2 = "<div class='well well-small' id='historical-controls'><p>The pressure map will be updated automatically as long this tab is selected.</p></div>";
 
-    var last_timestamp = 0;
+  var last_timestamp = 0;
 	/* Set the intial image to be the latest image available */
-        $.ajax({
-            type: 'GET',
-            url: '/latest/image',
-            success: function(data, textStatus, request) {
-                last_timestamp = request.getResponseHeader('Snapshot-Time');
-                $('#imgbox').append(data.firstChild);
-                updateTemps();
-            }
-        });
+  updateImage();
 
 	//hide the user controls depending on what button is selected in the segmented control
 	$("#current-button").click(function(){
@@ -101,6 +121,7 @@ $(document).ready(function(){
 			$("#segmented-control-content").empty();
 			$("#segmented-control-content").append(page1);
 		}
+		updateImage();
 	});
 
 	//second segmented control button is clicked
@@ -117,7 +138,8 @@ $(document).ready(function(){
 			$("#segmented-control-content").empty();
 			$("#segmented-control-content").append(page2);
 		}
-	})
+		updateImage();
+	});
 
 
 	updateTemps();
@@ -129,15 +151,30 @@ $(document).ready(function(){
         $.get('/latest/timestamp', function(ts) {
             if (ts != last_timestamp) {
                 last_timestamp = ts;
-                 $.ajax({
+                if($('#current-button').hasClass("active")){
+                	$.ajax({
 				            type: 'GET',
-				            url: '/latest/image',
+				            url: '/latest/image/temp',
 				            success: function(data, textStatus, request) {
                 		last_timestamp = request.getResponseHeader('Snapshot-Time');
+                		$('#imgbox').empty();
                 		$('#imgbox').append(data.firstChild);
                			 updateTemps();
             				}
-            			});                
+            			});    
+                }
+                else{
+                	$.ajax({
+				            type: 'GET',
+				            url: '/latest/image/pressure',
+				            success: function(data, textStatus, request) {
+                		last_timestamp = request.getResponseHeader('Snapshot-Time');
+                		$('#imgbox').empty();
+                		$('#imgbox').append(data.firstChild);
+               			 updateTemps();
+            				}
+            			}); 
+                }              
             }
             
         });
