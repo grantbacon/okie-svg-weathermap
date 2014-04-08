@@ -41,15 +41,15 @@
 		<br/><br/>
 		<center>
 		<div class='btn-group'>
-			<button class='btn btn-large active' id='current-button'>Current</button>
-			<button class='btn btn-large' id='historical-button'>Historical</button>
+			<button class='btn btn-large active' id='current-button'>Air Temperature</button>
+			<button class='btn btn-large' id='historical-button'>Air Pressure</button>
 		</div>
 		</center>
 		<br>
 		<div class='divider'></div>
 		<div id='segmented-control-content'>
 			<div class="well well-small" id='current-controls'>
-				<p>For current conditions the image to the left will be updated automatically.</p>
+				<p>The temperature map will update automatically as long as this tab is selected.</p>
 			</div>
 		</div>
 		<form></form>

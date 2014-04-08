@@ -130,12 +130,15 @@ $(document).ready(function(){
             if (ts != last_timestamp) {
                 last_timestamp = ts;
                 
-                $.get('/latest/image', function(data) {
-                    $('#imgbox').empty();
-                    $('#imgbox').append(data.firstChild);
-                    updateTemps();
-                    console.log("Hey yo I updated your picture.");
-                });
+                 $.ajax({
+				            type: 'GET',
+				            url: '/latest/image',
+				            success: function(data, textStatus, request) {
+                		last_timestamp = request.getResponseHeader('Snapshot-Time');
+                		$('#imgbox').append(data.firstChild);
+               			 updateTemps();
+            				}
+            				});
                 
             }
             //updateTemps();
