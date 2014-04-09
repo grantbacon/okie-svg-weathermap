@@ -294,6 +294,7 @@
        nil))                         
                                                                    
 ;quick test code based on expected live input format (list of (lat, lon, color))
+#| Removed as ACL2 will not accept this...                                                                    
 (let* ((input (list "34.81, -98.02, '15,0,255'"
                     "34.80, -96.67, '31,0,255'"
                     "34.59, -96.67, '0,63,255'"
@@ -302,7 +303,8 @@
                     "36.63, -96.81, '47,0,255'"))
        (points (strings->num-lists input)))
       (svgLines  (delstart points) 0))
-
+|#
+                                                                   
 (defun string-list->stdout (strli state)
   (let ((channel *standard-co*))
      (if (null channel)
@@ -334,3 +336,4 @@
                      (string-append "stdin"
                       (string-append ", output file: " "stdout")))
                     state))))))
+                    
