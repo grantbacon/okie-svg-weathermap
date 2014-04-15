@@ -12,10 +12,27 @@
                              (point 3 1 nil)) (point 0 1 nil))
 (check-expect (oppositePoint (point 3 4 nil) (point -3 1 nil)
                               (point 3 1 nil)) (point 3 1 nil))
-(check-expect (oppositePoint (oppositePoint (point 0 3 nil) 
+(check-expect (oppositePoint (point 0 3 nil) 
                               (point -3 -1 nil) (point 0 0 nil)) (POINT 9/10 3/10 NIL))
 (check-expect (oppositePoint (point 0 3 nil) (point -3 -1 nil)
                               (point 3 6 nil)) (POINT 21/85 237/85 NIL))
+              
+; appendStrings tests
+(check-expect (appendStrings '("hello " "world")) "hello world")
+(check-expect (appendStrings '(" " "")) " ")
+(check-expect (appendStrings '("a" "b" "c" "d" "e")) "abcde")
+(check-expect (appendStrings '("hello")) "hello")
+
+; minXY tests
+(check-expect (minXY (list (point 3 3 nil) (point -3 5 nil) (point 4 0 nil))) 
+              (point -3 0 NIL))
+(check-expect (minXY (list (point 3 2 nil) (point 3 5 nil) (point 4 2 nil))) 
+              (POINT 3 2 NIL))
+(check-expect (minXY (list (point 0 0 nil) (point 3 5 nil) (point 4 2 nil))) 
+              (POINT 0 0 NIL))
+(check-expect (minXY (list (point 3 3 nil) (point -3 5 nil) (point 4 0 nil))) 
+              (point -3 0 NIL))
+
 
 ; color->str tests
 (check-expect "255,255,255" (color->str '(255 255 255)))
