@@ -27,10 +27,10 @@ Instructions
 Team Zuse Members
 ==================
 
-Grant Bacon - @grantbacon
-Bryan Cain - @Plombo
-Joel Maupin - @jmaupin82
-Robert Wenrich - @rwenrich
-Paul Wright - @mithraz87
++ Grant Bacon - @grantbacon
++ Bryan Cain - @Plombo
++ Joel Maupin - @jmaupin82
++ Robert Wenrich - @rwenrich
++ Paul Wright - @mithraz87
 
 
