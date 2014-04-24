@@ -39,7 +39,6 @@ class NWS(object):
                 if len(line) <= 25: continue
                 data = line[25:].split()
                 if not data: continue
-                print data
                 try: temp = int(data[0])
                 except ValueError: continue
                 break
