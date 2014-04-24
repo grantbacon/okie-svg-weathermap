@@ -400,7 +400,7 @@ COUNTY_MAP = '''<g id="layer1">
        x="164.09137"
        y="55"
        font-size="14px"
-       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">99</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif"></text>
     <text
        x="793"
        y="100.14286"
@@ -412,7 +412,7 @@ COUNTY_MAP = '''<g id="layer1">
        x="797.04059"
        y="113.58884"
        font-size="14px"
-       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">99</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif"></text>
     <text
        x="579.42859"
        y="201.71428"
@@ -424,7 +424,7 @@ COUNTY_MAP = '''<g id="layer1">
        x="619.40613"
        y="216.6244"
        font-size="14px"
-       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">99</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif"></text>
     <text
        x="498.43475"
        y="311.80496"
@@ -436,7 +436,7 @@ COUNTY_MAP = '''<g id="layer1">
        x="513.15228"
        y="325.72089"
        font-size="14px"
-       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">99</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif"></text>
     <text
        x="640.85712"
        y="404.42856"
@@ -448,7 +448,7 @@ COUNTY_MAP = '''<g id="layer1">
        x="658.18274"
        y="421.68536"
        font-size="14px"
-       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">99</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif"></text>
     <text
        x="875.57147"
        y="389"
@@ -460,7 +460,7 @@ COUNTY_MAP = '''<g id="layer1">
        x="906.31476"
        y="405.52292"
        font-size="14px"
-       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">99</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif"></text>
     <text
        x="507.14285"
        y="95.14286"
@@ -484,7 +484,7 @@ COUNTY_MAP = '''<g id="layer1">
        x="836.2132"
        y="207.53304"
        font-size="14px"
-       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">99</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif"></text>
     <text
        x="603.63531"
        y="250.5685"
@@ -496,7 +496,7 @@ COUNTY_MAP = '''<g id="layer1">
        x="618.0202"
        y="264.52289"
        font-size="14px"
-       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">99</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif"></text>
     <text
        style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif"
        x="384.36304"
@@ -507,7 +507,7 @@ COUNTY_MAP = '''<g id="layer1">
        x="398.0202"
        y="203.91884"
        font-size="14px"
-       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif">67</text>
+       style="font-size:14px;fill:#ffffff;filter:url(#glow);font-family:sans-serif"></text>
 
        <image
        y="144.01643"
